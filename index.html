@@ -1,1 +1,213 @@
-<h1>HELLO JUDE!</h1>
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+</head>
+<title>Socket.IO chat</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font: 13px Helvetica, Arial;
+  }
+
+  form {
+    background: #000;
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+  form input {
+    border: 0;
+    padding: 10px;
+    width: 90%;
+    margin-right: .5%;
+  }
+
+  form button {
+    width: 9%;
+    background: rgb(130, 224, 255);
+    border: none;
+    padding: 10px;
+  }
+
+  #messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #messages li {
+    padding: 5px 10px;
+  }
+
+  #messages li:nth-child(odd) {
+    background: #eee;
+  }
+
+  #messages {
+    margin-bottom: 40px
+  }
+
+  #heade {
+    background-image: url('data:image/jpeg;base64,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');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+  }
+
+
+  .left {
+    text-align: left;
+  }
+
+  .right {
+    text-align: right;
+  }
+
+  .container {
+    border: 2px solid;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 500px;
+    margin-right: 500px;
+  }
+
+  .darker {
+    border-color: #ccc;
+    background-color: #ddd;
+  }
+
+  .container::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+</style>
+</head>
+
+<body style="background-image:url('http://www.af-usa.org/seeimg/big/129/1298705_dark-red-wallpaper-hd.jpg'); background-size: cover; background-repeat: no-repeat;">
+
+
+  <div id='heade' class="jumbotron text-center">
+    <h1>Dark Mode Messenger</h1>
+    <p>Socket.io project for SD Elective!</p>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <center><h1>ACTIVE USERS</h1></center>
+          <br>  <br> 
+          <br>
+          <div id='online'>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <center><h1>CHAT HERE</h1></center>
+          <br>  <br>  
+          <div id='message-container'>
+          </div>
+          <ul id="messages"></ul>
+          <form id='send-container'>
+            <input id="message-input" autocomplete="off" /><button id='send-button'>Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+ 
+    
+ 
+
+
+
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+
+    $(function () {
+      const socket = io();
+      const messageForm = document.getElementById('send-conatainer')
+      const messageInput = document.getElementById('message-input')
+      const messageContainer = document.getElementById('message-container')
+      const UserContainer = document.getElementById('online')
+
+
+
+      const namei = prompt('Input Your Name: ')
+      appendMessage('you joined');
+      socket.emit('newuser', { name: namei });
+      socket.emit('userconnected', { name: namei });
+
+      socket.on('newuser', data => {
+        addUser(data.name + ' is active');
+      })
+
+      socket.on('userconnected', data => {
+        appendMessage(data.name + ' :'+' connected');
+      })
+
+
+      socket.on('chatmessage', data => {
+        if (data.name == namei) {
+          appendMessage(data.name+":"+data.msg, "right");
+        } else {
+          appendMessage(data.name+":"+data.msg, "left");
+        }
+
+      })
+
+      $('form').submit(function (e) {
+        e.preventDefault()
+        const message = messageInput.value
+        $('#message-input').val('typing ........');
+        socket.emit('chatmessage', { name: namei, msg: message });
+        $('#message-input').val('');
+        return false;
+      })
+
+
+      function appendMessage(message, cls) {
+        const messageElement = document.createElement('div')
+        messageElement.classList.add(cls);
+        messageElement.innerText = message
+        messageContainer.append(messageElement)
+      }
+
+      function addUser(name) {
+        const newUser = document.createElement('div')
+        newUser.innerText = name;
+        UserContainer.append(newUser);
+      }
+
+
+    })
+
+
+  </script>
+</body>
+
+</html>
