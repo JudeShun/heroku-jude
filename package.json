@@ -1,0 +1,29 @@
+{
+  "name": "heroku-jude",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JudeShun/heroku-jude.git"
+  },
+  "keywords": [
+    "heroku",
+    "node"
+  ],
+  "author": "Ma. Judelyn Cabalhao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JudeShun/heroku-jude/issues"
+  },
+  "homepage": "https://github.com/JudeShun/heroku-jude#readme",
+  "engines": {
+    "node": "10.16"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
